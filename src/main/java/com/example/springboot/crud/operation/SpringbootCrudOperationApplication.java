@@ -22,11 +22,6 @@ public class SpringbootCrudOperationApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Employee employee=new Employee();
 
-//		employee.setId(1);
-//		 employee.setName("suhel");
-//		employee.setEmail("suhel@gmail.com");
-//		employeeRepository.save(employee);
-
 	}
 
 
