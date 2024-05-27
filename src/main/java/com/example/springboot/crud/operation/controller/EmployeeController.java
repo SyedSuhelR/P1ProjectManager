@@ -12,7 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/users")
 public class EmployeeController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class EmployeeController {
 
     @GetMapping("{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable  long id){
-        Employee employee=employeeRepository.findById(id).orElseThrow(() -> new ResourceNotfoundException("Employee not exist with id "+ id));
+        Employee employee=employeeRepository.findById(id).orElseThrow(() -> new ResourceNotfoundException("Employee not exist with this id "+ id));
         return ResponseEntity.ok(employee);
     }
 
@@ -43,6 +43,8 @@ public class EmployeeController {
         Employee updateEmployee=employeeRepository.findById(id).orElseThrow(() -> new ResourceNotfoundException("Employee not exist with id "+id));
         updateEmployee.setName(employeeDetails.getName());
         updateEmployee.setEmail(employeeDetails.getEmail());
+        updateEmployee.setEmail(employeeDetails.getUserRole());
+        updateEmployee.setEmail(employeeDetails.getActiveStatus());
 
         employeeRepository.save(updateEmployee);
         return ResponseEntity.ok(updateEmployee);
@@ -52,12 +54,8 @@ public class EmployeeController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable long id){
-
         Employee employee=employeeRepository.findById(id).orElseThrow(()-> new ResourceNotfoundException("Employee not found with this id "+id));
         employeeRepository.delete(employee);
-
-        
-
         return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
 

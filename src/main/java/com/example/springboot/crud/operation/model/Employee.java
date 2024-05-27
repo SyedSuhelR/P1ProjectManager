@@ -10,23 +10,42 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="employee")
+@Table(name="users")
 public class Employee {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long userid;
 
     private String name;
-    private String email;
+    private String Email;
+    private String userRole;
+    private String activeStatus;
+    private String password;
 
-    public long getId() {
+    @ManyToMany
+    @JoinColumn(name = "projectId")
+    private ProjectDetails projectId;
+
+    @ManyToMany
+    @JoinColumn(name = "Id")
+    private clientDetails id;
+
+    public clientDetails getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(clientDetails id) {
         this.id = id;
+    }
+
+    public ProjectDetails getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(ProjectDetails projectId) {
+        this.projectId = projectId;
     }
 
     public String getName() {
@@ -37,20 +56,58 @@ public class Employee {
         this.name = name;
     }
 
+    public long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(long userid) {
+        this.userid = userid;
+    }
+
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        Email = email;
     }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
+    public String getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(String activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+
 
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
+                "userid=" + userid +
                 ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
+                ", Email='" + Email + '\'' +
+                ", userRole='" + userRole + '\'' +
+                ", activeStatus='" + activeStatus + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
