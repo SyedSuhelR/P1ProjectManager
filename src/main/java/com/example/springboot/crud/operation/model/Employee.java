@@ -2,9 +2,11 @@ package com.example.springboot.crud.operation.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.scheduling.config.Task;
+
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -17,37 +19,25 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userid;
-
     private String name;
     private String Email;
     private String userRole;
     private String activeStatus;
     private String password;
 
-    @ManyToMany
-    @JoinColumn(name = "projectId")
-    private ProjectDetails projectId;
+//    @ManyToMany(mappedBy = "employees")
+//    private List<TaskDetails> tasks;
 
-    @ManyToMany
-    @JoinColumn(name = "Id")
-    private clientDetails id;
 
-    public clientDetails getId() {
-        return id;
-    }
+    @ManyToMany(mappedBy = "employee")
+    private List<ProjectDetails> project;
 
-    public void setId(clientDetails id) {
-        this.id = id;
-    }
 
-    public ProjectDetails getProjectId() {
-        return projectId;
-    }
+    @OneToMany(mappedBy = "Employee")
+    private List<TaskDetails> tasksDetails;
 
-    public void setProjectId(ProjectDetails projectId) {
-        this.projectId = projectId;
-    }
-
+    @ManyToMany(mappedBy = "Employee")
+    private List<clientDetails> clientDetails;
     public String getName() {
         return name;
     }

@@ -3,6 +3,9 @@ package com.example.springboot.crud.operation.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+import java.util.Set;
+
 @Setter
 @Getter
 @Data
@@ -20,9 +23,17 @@ public class ProjectDetails {
     private String endDate;
     private String projectStatus;
 
+
     @ManyToOne
-    @JoinColumn(name="Id")
-    private clientDetails Id;
+    @JoinColumn(name="project")
+    private clientDetails clientDetails;
+
+    @ManyToMany
+    @JoinTable(
+            name ="project",
+    joinColumns = @JoinColumn(name = "projectId"),
+    inverseJoinColumns = @JoinColumn(name = "EmployeeId"))
+    private List<Employee> employee;
 
     @Override
     public String toString() {
@@ -32,17 +43,11 @@ public class ProjectDetails {
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", projectStatus='" + projectStatus + '\'' +
-                ", Id=" + Id +
+
                 '}';
     }
 
-    public clientDetails getId() {
-        return Id;
-    }
 
-    public void setId(clientDetails id) {
-        Id = id;
-    }
 
     public String getProjectStatus() {
         return projectStatus;
@@ -55,6 +60,7 @@ public class ProjectDetails {
     public String getEndDate() {
         return endDate;
     }
+
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;

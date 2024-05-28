@@ -3,6 +3,9 @@ package com.example.springboot.crud.operation.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -18,29 +21,37 @@ public class clientDetails {
     private String clientName;
     private String Email;
     private String Adress;
-    @OneToMany
-    @JoinColumn(name = "projectId")
-    private ProjectDetails projectId;
+//    @ManyToOne
+//    @JoinColumn(name = "projectId")
+//    private ProjectDetails projectDetails;
+//
+//    @ManyToMany(mappedBy = "clientDetails")
+//    private Set<ProjectDetails> projects;
+
+
+    @OneToMany(mappedBy = "clientDetails")
+    private List<ProjectDetails> project;
 
     @ManyToMany
-    @JoinColumn(name = "userid")
-    private Employee userid;
-
-    public Employee getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Employee userid) {
-        this.userid = userid;
-    }
-
-    public ProjectDetails getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(ProjectDetails projectId) {
-        this.projectId = projectId;
-    }
+    @JoinTable(name = "clientDetails",
+    joinColumns = @JoinColumn(name = "clientid"),
+            inverseJoinColumns = @JoinColumn(name = "EmployeeId"))
+    private List<Employee> Employee;
+//    public Employee getUserid() {
+//        return userid;
+//    }
+//
+//    public void setUserid(Employee userid) {
+//        this.userid = userid;
+//    }
+//
+//    public ProjectDetails getProjectId() {
+//        return projectId;
+//    }
+//
+//    public void setProjectId(ProjectDetails projectId) {
+//        this.projectId = projectId;
+//    }
 
 
     public long getId() {
